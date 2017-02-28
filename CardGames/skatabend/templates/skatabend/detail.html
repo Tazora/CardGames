@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ round_id.name }}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/SkatOrange.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/jquery.mobile.structure-1.4.5.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/jquery.mobile.icons-1.4.5.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/ownstyle.css' %}"/>
+
+    <script src="{%static 'skatabend/jquery.min.js' %}"></script>
+    <script src="{%static 'skatabend/jquery.mobile-1.4.5.min.js' %}"></script>
+    <script src="{%static 'skatabend/berechneErgebnis.js' %}"></script>
+
+</head>
+<body>
+<div data-role="page" data-url="{% url 'skatabend:detail' round_id.id %}" data-theme="a">
+
+
+    <div data-role="header">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="{% url 'skatabend:index' %}" data-icon="home" data-ajax="false">Übersicht</a></li>
+                <li><a href="{% url 'skatabend:history' %}" data-icon="bullets" data-ajax="false">Historie</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div>
+
+    <div role="main" class="ui-content">
+        {% if points_id %}
+        <table border rules=groups id="ergebnis">
+		<thead>
+            <tr>
+                <th>{{ round_id.player_A }}</th>
+                <th>{{ round_id.player_B }}</th>
+                <th>{{ round_id.player_C }}</th>
+            </tr>
+		</thead>
+		<tbody>
+            {% for points in points_id %}
+            <tr>
+                <td>{{ points.round_points_A }}</td>
+                <td>{{ points.round_points_B }}</td>
+                <td>{{ points.round_points_C }}</td>
+            </tr>
+            {% endfor %}
+		</tbody>
+		<tfoot>
+            <tr>
+                <td>{{ round_id.points_A }}</td>
+                <td>{{ round_id.points_B }}</td>
+                <td>{{ round_id.points_C }}</td>
+            </tr>
+		</tfoot>
+        </table>
+        {% else %}
+        <p>No points are available.</p>
+        {% endif %}
+
+
+        <form action="{% url 'skatabend:calculate' round_id.id %}" method="post" id="eingabePunkte" data-ajax="false">
+            {% csrf_token %}
+            <fieldset data-role="controlgroup" data-type="horizontal" id="eingabePlayer">
+                <label for="SpielerA">{{ round_id.player_A }}</label>
+                <input id="SpielerA" type="radio" value="PunkteA" name="Spieler">
+                <label for="SpielerB">{{ round_id.player_B }}</label>
+                <input id="SpielerB" type="radio" value="PunkteB" name="Spieler">
+                <label for="SpielerC">{{ round_id.player_C }}</label>
+                <input id="SpielerC" type="radio" value="PunkteC" name="Spieler">
+            </fieldset>
+            <div id="Rechenfeld">
+                Farbe
+                <fieldset data-role="controlgroup" data-theme="SkatOrange" data-type="horizontal">
+                    <label for="Kreuz">Kreuz</label>
+                    <input id="Kreuz" type="radio" value="Kreuz" name="Grundwert" checked>
+                    <label for="Pik">Pik</label>
+                    <input id="Pik" type="radio" value="Pik" name="Grundwert">
+                    <label for="Herz">Herz</label>
+                    <input id="Herz" type="radio" value="Herz" name="Grundwert">
+                    <label for="Karo">Karo</label>
+                    <input id="Karo" type="radio" value="Karo" name="Grundwert">
+                    <label for="Grande">Grande</label>
+                    <input id="Grande" type="radio" value="Grande" name="Grundwert">
+                    <label for="Null">Null</label>
+                    <input id="Null" type="radio" value="Null" name="Grundwert">
+                </fieldset>
+                Buben
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <label for="BubeKreuz">Kreuz</label>
+                    <input id="BubeKreuz" type="checkbox" value="1" name="Buben">
+                    <label for="BubePik">Pik</label>
+                    <input id="BubePik" type="checkbox" value="1" name="Buben">
+                    <label for="BubeHerz">Herz</label>
+                    <input id="BubeHerz" type="checkbox" value="1" name="Buben">
+                    <label for="BubeKaro">Karo</label>
+                    <input id="BubeKaro" type="checkbox" value="1" name="Buben">
+                </fieldset>
+
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <label for="Hand">Hand</label>
+                    <input id="Hand" type="checkbox" name="Hand">
+                </fieldset>
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <label for="Schneider">Schneider</label>
+                    <input id="Schneider" type="checkbox" name="Schneider">
+                    <label for="SchneiderAngesagt">angesagt</label>
+                    <input id="SchneiderAngesagt" type="checkbox" name="Hand">
+                </fieldset>
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <label for="Schwarz">Schwarz</label>
+                    <input id="Schwarz" type="checkbox" name="Schwarz">
+                    <label for="SchwarzAngesagt">angesagt</label>
+                    <input id="SchwarzAngesagt" type="checkbox" name="Hand">
+                </fieldset>
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <label for="Ouvert">Ouvert</label>
+                    <input id="Ouvert" type="checkbox" name="Ouvert">
+                </fieldset>
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <label for="Gewonnen">Gewonnen</label>
+                    <input id="Gewonnen" type="radio" name="Ausgang" checked>
+                    <label for="Verloren">Verloren</label>
+                    <input id="Verloren" type="radio" name="Ausgang">
+                </fieldset>
+                <fieldset data-role="controlgroup" data-type="horizontal">
+                    <label for="PunkteA">{{ round_id.player_A }}</label>
+                    <input id="PunkteA" type="number" value="0" name="PunkteA">
+                    <label for="PunkteB">{{ round_id.player_B }}</label>
+                    <input id="PunkteB" type="number" value="0" name="PunkteB">
+                    <label for="PunkteC">{{ round_id.player_C }}</label>
+                    <input id="PunkteC" type="number" value="0" name="PunkteC">
+                </fieldset>
+                <p id="AnzeigeMulti">
+
+                </p>
+            </div>
+
+
+            <button type="reset" id="reset">Eingaben zurücksetzen</button>
+            <button type="submit">Eingaben absenden</button>
+
+
+        </form>
+        <form action="{% url 'skatabend:recalculate' round_id.id %}" method="post" id="recalculate" data-ajax="false">
+            {% csrf_token %}
+            <button type="submit" id="recalculate_button">Gesamtpunktzahl erneut berechnen</button>
+        </form>
+    </div>
+
+
+    <!-- Hier kommt der Footer -->
+    <div data-role="footer">
+        <h5>Eine Skat-App von Sebastian Thon</h5>
+    </div>
+
+
+</div>
+
+</body>
+</html>

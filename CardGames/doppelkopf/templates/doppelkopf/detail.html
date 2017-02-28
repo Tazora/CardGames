@@ -1,0 +1,171 @@
+{% extends './base.html' %}
+
+{% block title %}
+    {{ round_id.name }}
+{% endblock %}
+
+{% block header %}
+    <h1>{{ round_id.name }}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {% if points_id %}
+            <table id="ergebnis" class="u-full-width">
+                <thead>
+                <tr>
+                    <th>{{ round_id.player_A }}</th>
+                    <th>{{ round_id.player_B }}</th>
+                    <th>{{ round_id.player_C }}</th>
+                    <th>{{ round_id.player_D }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for points in points_id %}
+                    <tr>
+                        <td>{{ points.round_points_A }}</td>
+                        <td>{{ points.round_points_B }}</td>
+                        <td>{{ points.round_points_C }}</td>
+                        <td>{{ points.round_points_D }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <td>{{ round_id.points_A }}</td>
+                    <td>{{ round_id.points_B }}</td>
+                    <td>{{ round_id.points_C }}</td>
+                    <td>{{ round_id.points_D }}</td>
+                </tr>
+                </tfoot>
+            </table>
+
+        {% else %}
+            Noch keine Punkte eingetragen.
+        {% endif %}
+    </div>
+    <div class="row">
+        <form action="{% url 'doppelkopf:recalculate' round_id.id %}" method="post" id="recalculate">
+            {% csrf_token %}
+            <button type="submit" id="recalculate_button">Gesamtpunktzahl erneut berechnen</button>
+        </form>
+    </div>
+    <form action="{% url 'doppelkopf:calculate' round_id.id %}" method="post" id="calculate">
+        {% csrf_token %}
+        <h3>Spielart</h3>
+        <div class="row">
+            <div class="three columns">
+                <label for="normal">Normal</label>
+                <input id="normal" type="radio" value="normal" name="gametype" checked>
+            </div>
+            <div class="three columns">
+                <label for="hochzeit">Hochzeit</label>
+                <input id="hochzeit" type="radio" value="wedding" name="gametype">
+            </div>
+            <div class="three columns">
+                <label for="solo">Solo</label>
+                <input id="solo" type="radio" value="solo" name="gametype">
+            </div>
+        </div>
+        <h3>Re-Partei</h3>
+        <div class="row">
+            <div class="three columns">
+                <label for="player_A">{{ round_id.player_A }}</label>
+                <input id="player_A" type="checkbox" value="player_A" name="player">
+            </div>
+            <div class="three columns">
+                <label for="player_B">{{ round_id.player_B }}</label>
+                <input id="player_B" type="checkbox" value="player_B" name="player">
+            </div>
+            <div class="three columns">
+                <label for="player_C">{{ round_id.player_C }}</label>
+                <input id="player_C" type="checkbox" value="player_C" name="player">
+            </div>
+            <div class="three columns">
+                <label for="player_D">{{ round_id.player_D }}</label>
+                <input id="player_D" type="checkbox" value="player_D" name="player">
+            </div>
+        </div>
+
+        {% comment %}<h3>Sieger</h3>
+        <div class="row">
+            <div class="six columns">
+                <label for="re-party">Re-Partei</label>
+                <input id="re-party" type="radio" value="re-party" name="winner" checked>
+            </div>
+            <div class="six columns">
+                <label for="contra-party">Kontra-Partei</label>
+                <input id="contra-party" type="radio" value="contra-party" name="winner">
+            </div>
+        </div>{% endcomment %}
+        <h3>Augenzahl</h3>
+        <div class="row">
+            <div class="six columns">
+                <label for="points_re">Punkte Re-Partei</label>
+                <input id="points_re" type="number" value="240" name="points">
+            </div>
+            <div class="six columns">
+                <label for="points_contra">Punkte Kontra-Partei</label>
+                <input id="points_contra" type="number" value="0" name="points">
+            </div>
+        </div>
+        <h3>Sonderpunkte</h3>
+        <div class="row">
+            <div class="two columns">
+                <label for="fox">Fuchs gefangen</label>
+                <input id="fox" type="checkbox" value="fox">
+            </div>
+            <div class="two columns">
+                <label for="doublehead">Doppelkopf</label>
+                <input id="doublehead" type="checkbox" value="doublehead">
+            </div>
+            <div class="two columns">
+                <label for="karl">Karlchen gefangen</label>
+                <input id="karl" type="checkbox" value="karl">
+            </div>
+            <div class="two columns">
+                <label for="said_re">Re angesagt</label>
+                <input id="said_re" type="checkbox" value="said_re">
+            </div>
+            <div class="two columns">
+                <label for="said_contra">Kontra angesagt</label>
+                <input id="said_contra" type="checkbox" value="said_contra">
+            </div>
+        </div>
+        <div class="row">
+            <div class="two columns">
+                <label for="extra">Extra-Punkte</label>
+                <input id="extra" type="number" value="0">
+            </div>
+        </div>
+        <h3>Punkte</h3>
+        <div class="row">
+            <div class="three columns">
+                <label for="points_A">{{ round_id.player_A }}</label>
+                <input id="points_A" type="number" value="0" name="points_A">
+            </div>
+            <div class="three columns">
+                <label for="points_B">{{ round_id.player_B }}</label>
+                <input id="points_B" type="number" value="0" name="points_B">
+            </div>
+            <div class="three columns">
+                <label for="points_C">{{ round_id.player_C }}</label>
+                <input id="points_C" type="number" value="0" name="points_C">
+            </div>
+            <div class="three columns">
+                <label for="points_D">{{ round_id.player_D }}</label>
+                <input id="points_D" type="number" value="0" name="points_D">
+            </div>
+        </div>
+        <div class="row">
+            <div class="six columns">
+                <button type="reset" id="reset">Eingaben zurücksetzen</button>
+            </div>
+            <div class="six columns">
+                <button type="submit">Eingaben absenden</button>
+            </div>
+        </div>
+    </form>
+
+
+{% endblock %}

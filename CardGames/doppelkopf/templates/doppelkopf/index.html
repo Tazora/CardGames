@@ -1,0 +1,53 @@
+{% extends './base.html' %}
+
+{% block title %}
+Doppelkopf
+{% endblock %}
+
+{% block header %}
+<h1>Doppelkopf - Index</h1>
+{% endblock %}
+
+{% block content %}
+<form action="{% url 'doppelkopf:insert_round' %}" method="post" id="insert_round">
+    {% csrf_token %}
+        <div class="row">
+            <label for="name_round" class="u-full-width">Name</label>
+            <input id="name_round" class="u-full-width" type="text" name="name_round" value="Doppelkopf am {% now 'd.m.Y' %}">
+        </div>
+        <div class="row">
+            <div class="three columns">
+                <label for="player_A">Erster Geber</label>
+                <input id="player_A" type="text" name="player_A" placeholder="Horst">
+            </div>
+            <div class="three columns">
+                <label for="player_B">Zweiter Geber</label>
+                <input id="player_B" type="text" name="player_B" placeholder="Wilhelm">
+            </div>
+            <div class="three columns">
+                <label for="player_C">Dritter Geber</label>
+                <input id="player_C" type="text" name="player_C" placeholder="Friedrich">
+            </div>
+            <div class="three columns">
+                <label for="player_D">Vierter Geber</label>
+                <input id="player_D" type="text" name="player_D" placeholder="Hans">
+            </div>
+        </div>
+        <div class="row">
+            <label for="tournament">Turnier</label>
+            <select id="tournament" class="u-full-width" name="tournament">
+                {% for t in tournaments %}
+                    <option value="{{ t.name }}">{{ t.name }}</option>
+                    {% endfor %}
+            </select>
+        </div>
+        <div class="row">
+            <div class="six columns">
+                <button type="reset" id="reset">Eingaben zurücksetzen</button>
+            </div>
+            <div class="six colums">
+                <button type="submit">Eingaben absenden</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

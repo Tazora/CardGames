@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/SkatOrange.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/jquery.mobile.structure-1.4.5.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/jquery.mobile.icons-1.4.5.min.css' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'skatabend/ownstyle.css' %}"/>
+
+    <script src="{%static 'skatabend/jquery.min.js' %}"></script>
+    <script src="{%static 'skatabend/jquery.mobile-1.4.5.min.js' %}"></script>
+
+</head>
+<body>
+<div data-role="page" data-url="{% url 'skatabend:index' %}" data-theme="a">
+
+    <div data-role="header">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="{% url 'skatabend:index' %}" data-icon="home" data-ajax="false">Übersicht</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div>
+
+
+    <div role="main" class="ui-content">
+        {% if tournaments %}
+        <ul>
+            {% for tournament in tournaments %}
+            <h3>{{ tournament.name }}</h3>
+			<p id="Datum">Erstellt am {{ tournament.pub_date }}</p>
+            <p>
+                {{round.player_A}}({{round.points_A}}), {{round.player_B}}({{round.points_B}}),
+                    {{round.player_C}}({{round.points_C}})
+            </p>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>No rounds are available.</p>
+        {% endif %}
+
+    </div>
+    <!-- Hier kommt der Footer -->
+    <div data-role="footer">
+        <h5>Eine Skat-App von Sebastian Thon</h5>
+    </div>
+</div>
+</body>
+</html>

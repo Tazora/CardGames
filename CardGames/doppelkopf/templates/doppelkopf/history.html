@@ -1,0 +1,48 @@
+{% extends './base.html' %}
+
+{% block title %}
+    Historie
+{% endblock %}
+
+{% block header %}
+    <h1>Gespielte Spiele und Turniere</h1>
+{% endblock %}
+
+{% block content %}
+    <h2>Turniere</h2>
+    {% if tournaments %}
+        {% for tournament in tournaments %}
+            <h3><a href="{% url 'doppelkopf:tournamentdetail' tournament.id %}">{{ tournament.name }}</a></h3>
+            <h6 class="Datum">Erstellt am {{ tournament.pub_date|date:"d. F Y" }}</h6>
+        {% endfor %}
+    {% else %}
+        <p>Keine Turniere verfügbar.</p>
+    {% endif %}
+    <h2>Gespielte Runden</h2>
+    {% if latest_round_list %}
+        {% for round in latest_round_list %}
+            <h3><a href="{% url 'doppelkopf:detail' round.id %}">{{ round.name }}</a></h3>
+            <h6 class="Datum">Erstellt am {{ round.pub_date|date:"d. F Y" }}</h6>
+            <table>
+                <thead>
+                <tr>
+                    <th>{{ round.player_A }}</th>
+                    <th>{{ round.player_B }}</th>
+                    <th>{{ round.player_C }}</th>
+                    <th>{{ round.player_D }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ round.points_A }}</td>
+                    <td>{{ round.points_B }}</td>
+                    <td>{{ round.points_C }}</td>
+                    <td>{{ round.points_D }}</td>
+                </tr>
+                </tbody>
+            </table>
+        {% endfor %}
+    {% else %}
+        <p>Keine Runden verfügbar.</p>
+    {% endif %}
+{% endblock %}

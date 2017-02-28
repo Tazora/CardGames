@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/SkatOrange.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/jquery.mobile.structure-1.4.5.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/jquery.mobile.icons-1.4.5.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/ownstyle.css' %}"/>
+
+    <script src="{% static 'skatabend/jquery.min.js' %}"></script>
+    <script src="{% static 'skatabend/jquery.mobile-1.4.5.min.js' %}"></script>
+
+</head>
+<body>
+<div data-role="page" data-url="{% url 'skatabend:index' %}" data-theme="a">
+
+    <div data-role="header">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="{% url 'skatabend:index' %}" data-icon="home" data-ajax="false">Übersicht</a></li>
+                <li><a href="{% url 'skatabend:history' %}" data-icon="bullets" data-ajax="false">Historie</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div>
+
+
+    <div role="main" class="ui-content">
+        <h1>{{ tournament_now.name }}</h1>
+        {% if rounds %}
+            <h3>Gespielte Runden</h3>
+            <ul>
+                {% for r in rounds %}
+                    <li><a href="{% url 'skatabend:detail' r.id %}" data-ajax="false">{{ r.name }}</a></li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if points %}
+            <table border rules="groups">
+                <thead>
+                <tr>
+                    <th>Spieler</th>
+                    <th>Punkte</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for key, value in points %}
+                    <tr>
+                        <td>{{ key }}</td>
+                        <td>{{ value }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No rounds are available.</p>
+        {% endif %}
+    </div>
+    <!-- Hier kommt der Footer -->
+    <div data-role="footer">
+        <h5>Eine Skat-App von Sebastian Thon</h5>
+    </div>
+</div>
+</body>
+</html>

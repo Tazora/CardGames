@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/SkatOrange.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/jquery.mobile.structure-1.4.5.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/jquery.mobile.icons-1.4.5.min.css' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'skatabend/ownstyle.css' %}"/>
+
+    <script src="{%static 'skatabend/jquery.min.js' %}"></script>
+    <script src="{%static 'skatabend/jquery.mobile-1.4.5.min.js' %}"></script>
+
+</head>
+<body>
+<div data-role="page" data-url="{% url 'skatabend:index' %}" data-theme="a">
+
+    <div data-role="header">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="{% url 'skatabend:index' %}" data-icon="home" data-ajax="false">Übersicht</a></li>
+                <li><a href="{% url 'skatabend:history' %}" data-icon="bullets" data-ajax="false">Historie</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div>
+
+
+    <div role="main" class="ui-content">
+
+        <form action="{% url 'skatabend:insertRound' %}" method="post" id="insertRound" data-ajax="false">
+            {% csrf_token %}
+            <fieldset>
+                <label for="name_round">Name der Runde</label>
+                <input id="name_round" type="text" name="name_round" value="Skat am {% now 'd.m.Y' %}">
+            </fieldset>
+            <fieldset>
+                <label for="player_A">Erster Geber</label>
+                <input id="player_A" type="text" name="player_A">
+                <label for="player_B">Zweiter Geber</label>
+                <input id="player_B" type="text" name="player_B">
+                <label for="player_C">Dritter Geber</label>
+                <input id="player_C" type="text" name="player_C">
+            </fieldset>
+            <fieldset>
+                <label for="tournament">Turnier</label>
+                <select id="tournament" name="tournament">
+                    {% for t in tournaments %}
+                    <option value="{{ t.name }}">{{ t.name }}</option>
+                    {% endfor %}
+                </select>
+            </fieldset>
+            <button type="reset" id="reset">Eingaben zurücksetzen</button>
+            <button type="submit">Eingaben absenden</button>
+        </form>
+    </div>
+    <!-- Hier kommt der Footer -->
+    <div data-role="footer">
+        <h5>Eine Skat-App von Sebastian Thon</h5>
+    </div>
+</div>
+</body>
+</html>

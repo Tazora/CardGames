@@ -1,0 +1,26 @@
+{% extends './base.html' %}
+
+{% block title %}
+Turniere
+{% endblock %}
+
+{% block header %}
+<h1>Gespielte Turniere</h1>
+{% endblock %}
+
+{% block content %}
+    {% if tournaments %}
+        <ul>
+            {% for tournament in tournaments %}
+            <h3>{{ tournament.name }}</h3>
+			<p id="Datum">Erstellt am {{ tournament.pub_date }}</p>
+            <p>
+                {{round.player_A}}({{round.points_A}}), {{round.player_B}}({{round.points_B}}),
+                    {{round.player_C}}({{round.points_C}})
+            </p>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Keine Turniere verfügbar.</p>
+        {% endif %}
+{% endblock %}

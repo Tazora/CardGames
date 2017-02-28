@@ -1,0 +1,92 @@
+#ergebnis {
+    margin: auto;
+    width: 100%;
+}
+
+#eingabePunkte {
+    margin: auto;
+    text-align: center;
+}
+
+#tournament h3 {
+    margin-top: 1em;
+    margin-right: 0;
+    margin-left: 0;
+    margin-bottom: 0;
+}
+
+#tournament h6 {
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 0;
+    margin-bottom: 1em;
+}
+
+#round h3 {
+    margin-top: 1em;
+    margin-right: 0;
+    margin-left: 0;
+    margin-bottom: 0;
+}
+
+#round h6 {
+    margin-top: 0;
+    margin-right: 0;
+    margin-left: 0;
+    margin-bottom: 1em;
+}
+
+table {
+    margin: auto;
+    width: 100%;
+    text-align: center;
+    table-layout: fixed;
+}
+
+th {
+    background-color: #ffcc33;
+    color: black;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:nth-child(3n - 2) > td:first-child::before {
+    content: "*";
+}
+
+tbody tr:nth-child(3n - 1) > td:nth-child(2)::before {
+    content: "*";
+}
+
+tbody tr:nth-child(3n) > td:last-child::before {
+    content: "*";
+}
+
+
+#ergebnis tr:hover {
+    background-color: #ffcc33;
+}
+
+/*
+#eingabePlayer {
+    margin: auto;
+    width: auto;
+}*/
+
+
+@media (min-width: 720px) {
+
+    .ui-content, .ui-header, .ui-footer {
+        width: 720px;
+        margin: auto;
+    }
+}
+
+@media (max-width: 720px) {
+
+    #Rechenfeld .ui-btn {
+        padding: 0.7em 0.3em;
+    }
+}

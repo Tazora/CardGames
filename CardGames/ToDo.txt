@@ -1,0 +1,12 @@
+TODO:
+    Add rules-site
+        maybe integrate rules in backend and read it out
+        maybe implement variants and easy rule-changing
+    
+    Add editing
+        User-based
+            implement authentification, etc.
+
+    Add tournament-creation
+
+    

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>
+        {% block title %}Doppelkopf{% endblock %}
+    </title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'doppelkopf/css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'doppelkopf/css/skeleton.css' %}">
+    <link rel="stylesheet" href="{% static 'doppelkopf/css/ownstyle.css' %}">
+
+    <script src="{% static 'doppelkopf/javascript/jquery.min.js' %}"></script>
+    <script src="{% static 'doppelkopf/javascript/calculator.js' %}"></script>
+</head>
+<body>
+<div class="container">
+    {% block top_navigation %}
+        <div class="row" role="navigation" id="nav-bar">
+            <div class="six columns">
+                <a href="{% url 'doppelkopf:index' %}" class="u-full-width"><div>Übersicht</div></a>
+            </div>
+            <div class="six columns">
+                <a href="{% url 'doppelkopf:history' %}" class="u-full-width"><div>Historie</div></a>
+            </div>
+        </div>
+    {% endblock %}
+    {% block header %}
+        <h1>Titel der Seite</h1>
+    {% endblock %}
+        {% block content %}
+            Hier ist der Content
+        {% endblock %}
+    {% block footer %}
+        <div class="row">
+            <div class="six columns">
+                <a href="">Impressum</a>
+            </div>
+            <div class="six columns">
+                Doppelkopf by Sebastian Thon
+            </div>
+        </div>
+    {% endblock %}
+</div>
+</body>
+</html>

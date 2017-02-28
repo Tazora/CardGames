@@ -1,0 +1,40 @@
+{% extends './base.html' %}
+
+{% block title %}
+Historie
+{% endblock %}
+
+{% block header %}
+ <h1>{{ tournament_now.name }}</h1>
+{% endblock %}
+
+{% block content %}
+    {% if rounds %}
+        <h3>Gespielte Runden</h3>
+        <ul>
+        {% for r in rounds %}
+            <li><a href="{% url 'doppelkopf:detail' r.id %}">{{ r.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+        {% if points %}
+        <table border rules="groups">
+            <thead>
+            <tr>
+                <th>Spieler</th>
+                <th>Punkte</th>
+            </tr>
+            </thead>
+                <tbody>
+                {% for key, value in points %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+        <p>No rounds are available.</p>
+        {% endif %}
+{% endblock %}

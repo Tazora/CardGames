@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/SkatOrange.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/jquery.mobile.structure-1.4.5.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'skatabend/jquery.mobile.icons-1.4.5.min.css' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'skatabend/ownstyle.css' %}"/>
+
+    <script src="{%static 'skatabend/jquery.min.js' %}"></script>
+    <script src="{%static 'skatabend/jquery.mobile-1.4.5.min.js' %}"></script>
+
+</head>
+<body>
+<div data-role="page" data-url="{% url 'skatabend:index' %}" data-theme="a">
+
+    <div data-role="header">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="{% url 'skatabend:index' %}" data-icon="home" data-ajax="false">Übersicht</a></li>
+                <li><a href="{% url 'skatabend:history' %}" data-icon="bullets" data-ajax="false">Historie</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div>
+
+
+    <div role="main" class="ui-content">
+
+
+    <div id="tournament">
+    <h1>Turniere</h1>
+        {% if tournaments %}
+            {% for tournament in tournaments %}
+            <h3><a href="{% url 'skatabend:tournamentdetail' tournament.id %}" data-ajax="false">{{ tournament.name }}</a></h3>
+			<h6 class="Datum">Erstellt am {{ tournament.pub_date|date:"d. F Y" }}</h6>
+
+            {% endfor %}
+        {% else %}
+        <p>Keine Turniere verfügbar.</p>
+        {% endif %}
+    </div>
+
+    <div id="round">
+    <h1>Runden</h1>
+        {% if latest_round_list %}
+            {% for round in latest_round_list %}
+            <h3><a href="{% url 'skatabend:detail' round.id %}" data-ajax="false">{{ round.name }}</a></h3>
+			<h6 class="Datum">Erstellt am {{ round.pub_date|date:"d. F Y" }}</h6>
+            <table border rules="groups">
+            <thead>
+            <tr>
+                <th>{{round.player_A}}</th>
+                <th>{{round.player_B}}</th>
+                <th>{{round.player_C}}</th>
+            </tr>
+            </thead>
+                <tbody>
+                <tr>
+                    <td>{{round.points_A}}</td>
+                    <td>{{round.points_B}}</td>
+                    <td>{{round.points_C}}</td>
+                </tr>
+                </tbody>
+            </table>
+            {% endfor %}
+        {% else %}
+        <p>Keine Runden verfügbar.</p>
+        {% endif %}
+    </div>
+
+    </div>
+    <!-- Hier kommt der Footer -->
+    <div data-role="footer">
+        <h5>Eine Skat-App von Sebastian Thon</h5>
+    </div>
+</div>
+</body>
+</html>
