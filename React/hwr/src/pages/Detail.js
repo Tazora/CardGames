@@ -59,7 +59,7 @@ renderTournamentsList() {
         return (<div key={index} id={tournament.id}>
             <h2>{name}:</h2>
             {tournament.rounds.map((round, index) => {
-                return (<h3 key={index}>{round}</h3>)
+                return (<h3 key={index}>{round.id}</h3>)
             })}
         <button onClick={this.deleteRound.bind(this, index, tournament.id)}>Runde entfernen</button>
         </div>);

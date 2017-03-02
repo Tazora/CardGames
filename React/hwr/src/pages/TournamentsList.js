@@ -12,34 +12,35 @@ class TournamentList extends React.Component {
     }
 
     render() {
-        /*return this.state.games.points.map((round, index) => {
-
-        return (<p key={index}>
-            <strong>{round.round}:</strong>
-            <a href={round.url}>{round.play_date}</a>.
-        </p>);
-    });*/
-    return this.state.games.map((round, index) => {
-        return (<p>
-            </p>);
-    })
+        let content = this.renderGame();
+        return (<div>
+            {content}
+            </div>);
     }
 
     componentWillMount() {
-        this.fetch('games');
+        this.fetchGame();
     }
 
-fetch(type) {
+fetchGame() {
     ajax.get(`http://localhost:8000/skatabend/api/rounds/8/`)
         .end((error, response) => {
             if (!error && response) {
                 console.dir(response.body);
-                this.setState({ [type]: response.body });
+                this.setState( prevState => {
+                    prevState.games = response.body
+                    return prevState });
             } else {
-                console.log(`Error fetching ${type}`, error);
+                console.log(`Error fetching Games`, error);
             }
         }
     );
+}
+
+renderGame() {
+    return <p>
+        1
+    </p>
 }
 
 }    

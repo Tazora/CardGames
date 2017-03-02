@@ -6,6 +6,6 @@ import './index.css';
 
 ReactDOM.render(
   <TournamentList />,
-  <Detail />,
+  //<Detail />,
   document.getElementById('root')
 );
