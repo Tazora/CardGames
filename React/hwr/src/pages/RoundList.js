@@ -1,14 +1,25 @@
 import React from 'react';
-import ajax from 'superagent';
 
 class RoundList extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
-
+        let content = this.renderGame();
+        return (
+            <tbody>
+                {content}
+            </tbody>
+        )
+    }
+    renderGame() {
+        return this.props.points.map((point, index) => {
+            return (
+                    <tr key={index}>
+                        <td>{point.round_points_A}</td>
+                        <td>{point.round_points_B}</td>
+                        <td>{point.round_points_C}</td>
+                    </tr>
+            );
+        });
     }
 }
 

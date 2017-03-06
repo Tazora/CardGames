@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import TournamentList from './pages/TournamentsList';
-import Detail from './pages/Detail';
+//import GamesList from './pages/GamesList';
+//import Detail from './pages/Detail';
+import GameContainer from './pages/GameContainer'
 import './index.css';
 
 ReactDOM.render(
-  <TournamentList />,
+  //<GamesList />,
   //<Detail />,
+  <GameContainer gameid="8" />,
   document.getElementById('root')
 );

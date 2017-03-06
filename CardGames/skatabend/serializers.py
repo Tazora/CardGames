@@ -20,9 +20,9 @@ class RoundSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'id', 'name', 'player_A', 'player_B', 'player_C', 'points_A', 'points_B', 'points_C', 'pub_date', 'last_played', 'tournament_played', 'points')
 
 class TournamentSerializer(serializers.HyperlinkedModelSerializer):
-    rounds = RoundSerializer(many=True, read_only=True)
     url = serializers.HyperlinkedIdentityField(view_name='skatabend:tournament-detail')
+    rounds = RoundSerializer(many=True, read_only=True)
+
     class Meta:
         model = Tournament
         fields = ('url', 'id', 'name', 'played_games', 'pub_date', 'rounds')
-        depth = 0
